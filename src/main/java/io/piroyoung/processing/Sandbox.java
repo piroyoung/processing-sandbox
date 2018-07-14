@@ -13,10 +13,6 @@ public class Sandbox extends PApplet {
     private List<Circle> circles;
     private int tick;
 
-    public Sandbox() {
-        circles = new ArrayList<Circle>();
-    }
-
     public static void main(String[] args) {
         PApplet.main("io.piroyoung.processing.Sandbox");
     }
@@ -29,6 +25,7 @@ public class Sandbox extends PApplet {
     @Override
     public void setup() {
         background(0);
+        circles = new ArrayList<Circle>();
         for (int i = 0; i < width; i += 64) {
             for (int j = 0; j < height; j += 64) {
                 circles.add(new Circle(this, i, j, r));
