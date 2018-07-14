@@ -4,6 +4,7 @@
 *.class
 target
 .idea
+sandbox.iml
 
 # Log file
 *.log
