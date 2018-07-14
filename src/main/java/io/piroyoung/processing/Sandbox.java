@@ -40,7 +40,7 @@ public class Sandbox extends PApplet {
         tick = tick > PHASE ? 0 : tick + 1;
 
         circles.forEach(c -> {
-            if (tick == 0) {
+            if (random(1.0f) < 0.005) {
                 c.resetTheta();
             }
             c.move(velocity);

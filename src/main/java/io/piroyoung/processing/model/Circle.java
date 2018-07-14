@@ -17,7 +17,7 @@ public class Circle extends PApplet {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.theta = parent.random(3.1415926f);
+        this.theta = random(2 * PI);
 
         List<String> colors = new ArrayList<>();
         colors.add("ffeaa5");
@@ -38,7 +38,7 @@ public class Circle extends PApplet {
     }
 
     public void resetTheta() {
-        this.theta = random(3.1415926f);
+        this.theta = random(2 * PI);
     }
 
     public void move(float dx, float dy) {
