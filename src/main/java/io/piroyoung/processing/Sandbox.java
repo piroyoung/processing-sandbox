@@ -9,7 +9,7 @@ import java.util.List;
 public class Sandbox extends PApplet {
     private static final int PHASE = 64;
     private static float velocity = 1.2f;
-    private static float r = 32;
+    private static float r = 64;
     private List<Circle> circles;
     private int tick;
 
@@ -40,7 +40,7 @@ public class Sandbox extends PApplet {
         tick = tick > PHASE ? 0 : tick + 1;
 
         circles.forEach(c -> {
-            if (random(1.0f) < 0.005) {
+            if (random(1.0f) < 0.01) {
                 c.resetTheta();
             }
             c.move(velocity);
