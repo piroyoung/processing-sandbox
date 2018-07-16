@@ -26,7 +26,6 @@ public class Sandbox extends PApplet {
             sum += v;
         }
         return sum / buffer.length;
-
     }
 
     @Override
