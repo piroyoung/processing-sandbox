@@ -15,6 +15,7 @@ public class Sandbox extends PApplet {
     private int tick;
     private Audio audio;
     private float[] levelBuffer;
+    private float levelOfset;
 
     public static void main(String[] args) {
         PApplet.main("io.piroyoung.processing.Sandbox");
@@ -38,6 +39,10 @@ public class Sandbox extends PApplet {
         tick = 0;
         audio = new Audio(this);
         levelBuffer = new float[PHASE];
+        for (float v : levelBuffer) {
+            v = 1.0f;
+        }
+        levelOfset = 1.0f;
 
         background(0);
         circles = new ArrayList<Circle>();
@@ -54,7 +59,9 @@ public class Sandbox extends PApplet {
         clear();
         tick = tick < PHASE - 1 ? tick + 1 : 0;
         levelBuffer[tick] = audio.getInputLevel();
-        float radiusGain = map(average(levelBuffer), 0f, 0.5f, 1f, 10f);
+        float in = average(levelBuffer);
+        levelOfset = in < levelOfset ? in : levelOfset;
+        float radiusGain = map(in - levelOfset, 0f, 0.5f, 1f, 20f);
         circles.forEach(c -> {
             if (random(1.0f) < 0.01) {
                 c.updateTheta();
