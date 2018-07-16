@@ -76,9 +76,9 @@ public class Circle extends PApplet {
         render(1.0f);
     }
 
-    public void render(float gainR) {
+    public void render(float radiusGain) {
         this.parent.noStroke();
         this.parent.fill(decColor.get(0), decColor.get(1), decColor.get(2), 200 * c.z);
-        this.parent.ellipse(c.x, c.y, gainR * r * c.z, gainR * r * c.z);
+        this.parent.ellipse(c.x, c.y, radiusGain * r * c.z, radiusGain * r * c.z);
     }
 }
