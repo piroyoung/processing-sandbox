@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Circle extends PApplet {
+public class Circle {
     private float r;
     private float theta;
     private PVector c;
@@ -19,7 +19,7 @@ public class Circle extends PApplet {
         this.parent = parent;
         this.c = new PVector(x, y, 0);
         this.r = r;
-        this.theta = random(2 * PI);
+        this.theta = parent.random(2 * parent.PI);
 
         List<String> colors = new ArrayList<>();
         colors.add("ffeaa5");
@@ -41,7 +41,7 @@ public class Circle extends PApplet {
     }
 
     public void updateTheta() {
-        this.theta = random(2 * PI);
+        this.theta = parent.random(2 * parent.PI);
     }
 
     public void updateZ() {
@@ -69,7 +69,7 @@ public class Circle extends PApplet {
     }
 
     public void move(float velocity) {
-        move(c.z * velocity * cos(theta), c.z * velocity * sin(theta));
+        move(c.z * velocity * PApplet.cos(theta), c.z * velocity * PApplet.sin(theta));
     }
 
     public void render() {
