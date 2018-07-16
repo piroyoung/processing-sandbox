@@ -44,7 +44,7 @@ public class Circle extends PApplet {
         this.theta = random(2 * PI);
     }
 
-    public void updateZ(){
+    public void updateZ() {
         this.c.z = this.culcZ();
     }
 
@@ -73,8 +73,12 @@ public class Circle extends PApplet {
     }
 
     public void render() {
+        render(1.0f);
+    }
+
+    public void render(float gainR) {
         this.parent.noStroke();
         this.parent.fill(decColor.get(0), decColor.get(1), decColor.get(2), 200 * c.z);
-        this.parent.ellipse(c.x, c.y, r * c.z, r * c.z);
+        this.parent.ellipse(c.x, c.y, gainR * r * c.z, gainR * r * c.z);
     }
 }
