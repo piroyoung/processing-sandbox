@@ -2,20 +2,21 @@ package io.piroyoung.processing;
 
 import io.piroyoung.processing.model.Audio;
 import io.piroyoung.processing.model.Circle;
+import io.piroyoung.processing.util.SlidingBuffer;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Sandbox extends PApplet {
-    private static final int PHASE = 5;
+    private static final int LONG_PHASE = 64;
+    private static final int SHORT_PHASE = 3;
     private static float velocity = 2f;
     private static float r = 64;
     private List<Circle> circles;
-    private int tick;
     private Audio audio;
-    private float[] levelBuffer;
-    private float levelOfset;
+    private SlidingBuffer longBuffer;
+    private SlidingBuffer shortBuffer;
 
     public static void main(String[] args) {
         PApplet.main("io.piroyoung.processing.Sandbox");
@@ -36,13 +37,9 @@ public class Sandbox extends PApplet {
 
     @Override
     public void setup() {
-        tick = 0;
         audio = new Audio(this);
-        levelBuffer = new float[PHASE];
-        for (float v : levelBuffer) {
-            v = 1.0f;
-        }
-        levelOfset = 1.0f;
+        longBuffer = new SlidingBuffer(LONG_PHASE);
+        shortBuffer = new SlidingBuffer(SHORT_PHASE);
 
         background(0);
         circles = new ArrayList<Circle>();
@@ -57,11 +54,10 @@ public class Sandbox extends PApplet {
     @Override
     public void draw() {
         clear();
-        tick = tick < PHASE - 1 ? tick + 1 : 0;
-        levelBuffer[tick] = audio.getInputLevel();
-        float in = average(levelBuffer);
-        levelOfset = in < levelOfset ? in : levelOfset;
-        float radiusGain = map(in - levelOfset, 0f, 0.5f, 1f, 20f);
+        float level = audio.getInputLevel();
+        longBuffer.put(level);
+        shortBuffer.put(level);
+        float radiusGain = map(shortBuffer.getAverage(), longBuffer.getMin(), longBuffer.getMax(), 1f, 5f);
         circles.forEach(c -> {
             if (random(1.0f) < 0.01) {
                 c.updateTheta();
