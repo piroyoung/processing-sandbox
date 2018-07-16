@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sandbox extends PApplet {
-    private static final int LONG_PHASE = 64;
-    private static final int SHORT_PHASE = 3;
+    private static final int LONG_PHASE = 128;
+    private static final int SHORT_PHASE = 10;
+    private static final int DOT_INTERVAL = 128;
     private static float velocity = 2f;
     private static float r = 64;
+    private int tick;
     private List<Circle> circles;
     private Audio audio;
     private SlidingBuffer longBuffer;
@@ -30,6 +32,10 @@ public class Sandbox extends PApplet {
         return sum / buffer.length;
     }
 
+    private void next() {
+        tick = tick < LONG_PHASE - 1 ? tick + 1 : 0;
+    }
+
     @Override
     public void settings() {
         fullScreen();
@@ -37,14 +43,15 @@ public class Sandbox extends PApplet {
 
     @Override
     public void setup() {
+        tick = 0;
         audio = new Audio(this);
         longBuffer = new SlidingBuffer(LONG_PHASE);
         shortBuffer = new SlidingBuffer(SHORT_PHASE);
 
         background(0);
         circles = new ArrayList<Circle>();
-        for (int i = 0; i < width; i += 64) {
-            for (int j = 0; j < height; j += 64) {
+        for (int i = 0; i < width; i += DOT_INTERVAL) {
+            for (int j = 0; j < height; j += DOT_INTERVAL) {
                 circles.add(new Circle(this, i, j, r));
             }
         }
@@ -54,17 +61,18 @@ public class Sandbox extends PApplet {
     @Override
     public void draw() {
         clear();
+        next();
         float level = audio.getInputLevel();
-        longBuffer.put(level);
         shortBuffer.put(level);
-        float radiusGain = map(shortBuffer.getAverage(), longBuffer.getMin(), longBuffer.getMax(), 1f, 5f);
+        longBuffer.put(shortBuffer.getAverage());
+        float gain = map(shortBuffer.getAverage(), longBuffer.getMin(), longBuffer.getMax(), 1f, 5f);
         circles.forEach(c -> {
             if (random(1.0f) < 0.01) {
                 c.updateTheta();
             }
             c.updateZ();
-            c.move(velocity);
-            c.render(radiusGain);
+            c.move(velocity * gain);
+            c.render(gain);
         });
     }
 }

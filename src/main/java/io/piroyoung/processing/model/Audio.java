@@ -9,16 +9,20 @@ public class Audio {
     private PApplet parent;
     private Minim minim;
     private AudioInput audioIn;
-    private AudioOutput audioOutput;
+    private AudioOutput audioOut;
 
     public Audio(PApplet parent) {
         this.parent = parent;
         minim = new Minim(parent);
-        audioIn = minim.getLineIn(Minim.MONO);
-        audioOutput = minim.getLineOut();
+        audioIn = minim.getLineIn(Minim.MONO, 128, 44000);
+        audioOut = minim.getLineOut();
     }
 
     public float getInputLevel() {
         return audioIn.mix.level();
+    }
+
+    public float getOutputLevel() {
+        return audioOut.mix.level();
     }
 }
