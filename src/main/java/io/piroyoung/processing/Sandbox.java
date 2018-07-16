@@ -20,6 +20,15 @@ public class Sandbox extends PApplet {
         PApplet.main("io.piroyoung.processing.Sandbox");
     }
 
+    private static float average(float[] buffer) {
+        float sum = 0f;
+        for (float v : buffer) {
+            sum += v;
+        }
+        return sum / buffer.length;
+
+    }
+
     @Override
     public void settings() {
         fullScreen();
@@ -55,14 +64,5 @@ public class Sandbox extends PApplet {
             c.move(velocity);
             c.render(radiusGain);
         });
-    }
-
-    public float average(float[] buffer) {
-        float sum = 0f;
-        for (float v : buffer) {
-            sum += v;
-        }
-        return sum / buffer.length;
-
     }
 }
