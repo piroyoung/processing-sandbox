@@ -1,12 +1,13 @@
 package io.piroyoung.processing.model;
 
-import com.google.common.annotations.VisibleForTesting;
 import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static io.piroyoung.processing.util.Color.toDecs;
 
 public class Circle {
     private float r;
@@ -29,15 +30,6 @@ public class Circle {
         ThreadLocalRandom randomizer = ThreadLocalRandom.current();
         String color = colors.get(randomizer.nextInt(colors.size()));
         this.decColor = toDecs(color);
-    }
-
-    @VisibleForTesting
-    public static List<Float> toDecs(String color) {
-        List<Float> decColors = new ArrayList<>(3);
-        decColors.add((float) Integer.parseInt(color.substring(0, 2), 16));
-        decColors.add((float) Integer.parseInt(color.substring(2, 4), 16));
-        decColors.add((float) Integer.parseInt(color.substring(4, 6), 16));
-        return decColors;
     }
 
     public void updateTheta() {
