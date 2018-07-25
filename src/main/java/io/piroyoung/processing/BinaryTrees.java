@@ -6,10 +6,10 @@ import processing.core.PApplet;
 import java.util.Arrays;
 
 public class BinaryTrees extends PApplet {
-    private static final int NUM = 30;
+    private static final int NUM = 300;
     private static final int FRAERATE = 120;
     private DiredtedPoint[] points;
-    private int tick;
+    private long tick;
 
     public static void main(String[] args) {
         PApplet.main("io.piroyoung.processing.BinaryTrees");
@@ -25,10 +25,7 @@ public class BinaryTrees extends PApplet {
         background(0);
         frameRate(FRAERATE);
         points = new DiredtedPoint[NUM];
-        for (int i = 0; i < NUM; i++) {
-            points[i] = new DiredtedPoint(this, width / 2, height);
-        }
-        ;
+        for (int i = 0; i < NUM; i++) points[i] = new DiredtedPoint(this, width / 2, height);
     }
 
     public void draw() {

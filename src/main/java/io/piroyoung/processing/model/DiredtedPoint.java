@@ -44,7 +44,7 @@ public class DiredtedPoint {
 
     synchronized public void render() {
         this.parent.noStroke();
-        this.parent.fill(decColor.get(0), decColor.get(1), decColor.get(2), 50);
+        this.parent.fill(decColor.get(0), decColor.get(1), decColor.get(2), 10);
         this.parent.ellipse(posision.x, posision.y, 2f, 2f);
     }
 
